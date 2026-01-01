@@ -1,13 +1,15 @@
 import User from '../models/User.js';
 import Task from '../models/Task.js';
 
-const me = async (req, res) => {
+const me = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user.id).select("name role");
-        res.status(200).json({ message: `Hello ${user.name}, you have accessed a protected route!` });
+        const user = await User.findById(req.user.id).select("name email role");
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        // res.status(500).json({ message: 'Server error' });
         next(error);
     }
 };

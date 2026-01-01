@@ -110,3 +110,55 @@ export const logoutUser = (req, res) => {
         next(error);
     }
 }
+
+export const adminOnly = async(req, res) => {
+    const user=await User.findById(req.user.id).select("name");
+    res.status(200).json({ message: `Hello ${user.name}, you have accessed a protected admin route!` });
+}
+
+export const getAllUsers = async (req, res, next) => {
+    try {
+        const users = await User.find().select('name email role');
+        res.status(200).json({ users });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updateUserRole = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { role } = req.body;
+
+        // Validate role
+        if (!role || !['user', 'admin'].includes(role)) {
+            return res.status(400).json({ message: 'Invalid role. Must be "user" or "admin"' });
+        }
+
+        // Find and update user
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Prevent admin from demoting themselves
+        if (user._id.toString() === req.user.id && role === 'user') {
+            return res.status(400).json({ message: 'You cannot demote yourself from admin' });
+        }
+
+        user.role = role;
+        await user.save();
+
+        res.status(200).json({
+            message: 'User role updated successfully',
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+}; 
