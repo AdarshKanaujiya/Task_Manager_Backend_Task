@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import '../styles/auth.css';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import Toast from "../components/Toast";
+import "../styles/auth.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -41,13 +45,20 @@ const Register = () => {
     }
 
     try {
+      console.log('Attempting registration...');
       await register(formData.name, formData.email, formData.password);
-      // Clear form and show success
+      console.log('Registration successful!');
       setFormData({ name: '', email: '', password: '' });
-      alert('Registration successful! Please login.');
-      navigate('/login');
+      setSuccess('✅ Registration successful! Redirecting to login...');
+      // Navigate immediately without setTimeout
+      navigate('/login', { replace: true });
+      console.log('Navigate called, should be on /login now');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      console.error('Registration error caught:', err);
+      const message =
+        err.response?.data?.message || err.message || 'Registration failed';
+      console.log('Error message to display:', message);
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -55,11 +66,20 @@ const Register = () => {
 
   return (
     <div className="auth-container">
+      <Toast
+        message={success}
+        type="success"
+        onClose={() => { /* Auto closes after 6 seconds */ }}
+      />
+      <Toast
+        message={error}
+        type="error"
+        onClose={() => setError("")}
+      />
+
       <div className="auth-card">
         <h1>Register</h1>
         <p className="auth-subtitle">Create a new account</p>
-
-        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
@@ -98,20 +118,18 @@ const Register = () => {
               onChange={handleChange}
               placeholder="Enter password (min 6 characters)"
               disabled={loading}
+              autoComplete="new-password"
             />
           </div>
 
-          <button
-            type="submit"
-            className="auth-button"
-            disabled={loading}
-          >
-            {loading ? 'Registering...' : 'Register'}
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
         <p className="auth-link">
-          Already have an account? <Link to="/login">Login here</Link>
+          Already have an account? <Link to="/login" onClick={()=>console.log("goint to login")}>Login here</Link>
+
         </p>
       </div>
     </div>

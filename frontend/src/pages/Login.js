@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Toast from '../components/Toast';
 import '../styles/auth.css';
 
 const Login = () => {
+    // console.log('Rendering Login component');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -33,11 +36,18 @@ const Login = () => {
     }
 
     try {
+      console.log('Attempting login...');
       await login(formData.email, formData.password);
+      console.log('Login successful!');
       setFormData({ email: '', password: '' });
-      navigate('/dashboard');
+      setSuccess('✅ Login successful! Redirecting...');
+      // Increased timeout so you can see the toast before redirect
+      setTimeout(() => navigate('/dashboard', { replace: true }), 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      console.error('Login error caught:', err);
+      const message = err.response?.data?.message || err.message || 'Login failed';
+      console.log('Error message to display:', message);
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -45,11 +55,11 @@ const Login = () => {
 
   return (
     <div className="auth-container">
+      <Toast message={success} type="success" onClose={() => {}} />
+      <Toast message={error} type="error" onClose={() => setError('')} />
       <div className="auth-card">
         <h1>Login</h1>
         <p className="auth-subtitle">Access your task manager</p>
-
-        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
@@ -75,6 +85,7 @@ const Login = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               disabled={loading}
+              autoComplete="current-password"
             />
           </div>
 
@@ -88,7 +99,7 @@ const Login = () => {
         </form>
 
         <p className="auth-link">
-          Don't have an account? <Link to="/register">Register here</Link>
+          Don't have an account? <Link to="/register" onClick={()=>console.log("going to regiter")}>Register here</Link>
         </p>
       </div>
     </div>

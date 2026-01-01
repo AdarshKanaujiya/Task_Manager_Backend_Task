@@ -1,6 +1,10 @@
 ## 🎯 Project Overview
 
-This project is a **production-ready RESTful API** built for task management with robust authentication, role-based access control, and secure data handling. It demonstrates enterprise-level backend development practices suitable for scalable applications.
+This project is a **production-ready RESTful API** built for task management with robust authentication, role-based access control, and secure data handling. 
+
+📌 Task Manager App
+
+A full-stack task management system with secure user authentication, role-based access control, scalable backend APIs, and an interactive frontend for API testing.
 
 ```
 ## 📝 API Documentation
@@ -15,9 +19,6 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 ```
 
 
-**Assignment Completion Status: ✅ 100% Backend Complete**
-
----
 
 ## ✅ Features Implemented
 
@@ -65,65 +66,66 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 | **Development** | nodemon, dotenv |
 
 ---
+🔐 Security Measures
+
+| Feature          | Description                 |
+| ---------------- | --------------------------- |
+| Password Hashing | bcrypt (10 rounds)          |
+| Token Security   | JWT + HTTP-only cookies     |
+| Token Expiry     | 1 hour                      |
+| XSS Protection   | Cookie flags & sanitization |
+| Validation       | express-validator           |
+| Error Handling   | Centralized middleware      |
 
 
 
-## 🚀 Installation & Setup
+📁 Project Structure
 
-### Prerequisites
-- Node.js (v18 or higher)
-- MongoDB (local or Atlas)
-- npm or yarn
+├── backend/
+│   ├── src/
+│   │   ├── controllers/       # Business logic
+│   │   ├── routes/            # API endpoints (/api/v1)
+│   │   ├── models/            # Database schemas
+│   │   ├── middleware/        # Auth & role checks
+│   │   └── config/            # DB & server config
+│   ├── .env.example
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/             # Auth, Dashboard, Task Pages
+│   │   ├── components/        # UI Components
+│   │   ├── context/           # AuthContext (JWT)
+│   │   └── services/          # API handlers (Axios)
+│   └── package.json
+│
+└── README.md
 
-### Steps
 
-1. **Clone the repository**
-```bash
-git clone <repository-url>
-cd Intershala/backend
-```
-
-2. **Install dependencies**
-```bash
+🚀 Installation & Setup
+Backend Setup
+cd backend
 npm install
-```
-
-3. **Configure environment variables**
-```bash
-# Create .env file in backend/ directory
 cp .env.example .env
-# Edit .env with your configuration (see below)
-```
+npm run dev          # Starts server on http://localhost:5000
 
-4. **Start MongoDB**
-```bash
-# If using local MongoDB
-mongod
-```
+Environment Variables
 
-5. **Run the server**
-```bash
-# Development mode (with auto-reload)
-npm run dev
+.env
 
-# Production mode
-npm start
-```
+PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/task_manager
+JWT_SECRET=your_secret_key_here
+FRONTEND_URL=http://localhost:3000
 
-6. **Verify installation**
-```bash
-# Server should be running on http://localhost:5000
-curl http://localhost:5000
-# Response: "API is running..."
-```
+Frontend Setup
+cd frontend
+npm install
+npm start             # Runs on http://localhost:3000
 
----
 
-## 🔐 Environment Variables
-
-Create a `.env` file in the `backend/` directory:
-
-refer .env.example
+If required, update API base URL in src/services/api.js.
 
 
 ## APi Documentation

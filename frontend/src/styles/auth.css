@@ -128,4 +128,12 @@
   border-radius: 6px;
   font-size: 14px;
   margin-bottom: 15px;
+  animation: shake 0.3s ease;
+  font-weight: 500;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
 }

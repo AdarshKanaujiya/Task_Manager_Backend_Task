@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { adminAPI } from '../services/authService';
+import Toast from './Toast';
 import '../styles/admin.css';
 
 const AdminPanel = ({ user }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [showPanel, setShowPanel] = useState(false);
   const [updatingUserId, setUpdatingUserId] = useState(null);
 
@@ -25,12 +27,15 @@ const AdminPanel = ({ user }) => {
   const handleRoleChange = async (userId, newRole) => {
     setUpdatingUserId(userId);
     setError('');
+    setSuccess('');
     try {
       await adminAPI.updateUserRole(userId, newRole);
       // Update local state
       setUsers(users.map(u => 
         u._id === userId ? { ...u, role: newRole } : u
       ));
+      setSuccess(`✅ User role updated to ${newRole} successfully!`);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to update user role');
     } finally {
@@ -50,6 +55,17 @@ const AdminPanel = ({ user }) => {
 
   return (
     <div className="admin-panel-container">
+      <Toast 
+        message={success} 
+        type="success" 
+        onClose={() => setSuccess('')}
+      />
+      <Toast 
+        message={error} 
+        type="error" 
+        onClose={() => setError('')}
+      />
+      
       <button 
         className="admin-toggle-btn"
         onClick={() => setShowPanel(!showPanel)}
@@ -70,8 +86,6 @@ const AdminPanel = ({ user }) => {
                 ✕
               </button>
             </div>
-
-            {error && <div className="error-message">{error}</div>}
 
             {loading && <p>Loading users...</p>}
 

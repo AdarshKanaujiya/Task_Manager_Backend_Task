@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { taskAPI } from '../services/authService';
 import AdminPanel from '../components/AdminPanel';
+import Toast from '../components/Toast';
 import '../styles/dashboard.css';
 
 const Dashboard = () => {
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -50,6 +52,7 @@ const Dashboard = () => {
   const handleAddTask = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     if (!formData.title || !formData.description) {
       setError('Please fill in all fields');
@@ -66,6 +69,7 @@ const Dashboard = () => {
           formData.description,
           formData.status
         );
+        setSuccess('✅ Task updated successfully!');
         setEditingId(null);
       } else {
         // Create new task
@@ -74,10 +78,12 @@ const Dashboard = () => {
           formData.description,
           formData.status
         );
+        setSuccess('✅ Task created successfully!');
       }
       setFormData({ title: '', description: '', status: 'pending' });
       setShowForm(false);
       await fetchTasks();
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save task');
     } finally {
@@ -102,9 +108,12 @@ const Dashboard = () => {
 
     setLoading(true);
     setError('');
+    setSuccess('');
     try {
       await taskAPI.deleteTask(id);
+      setSuccess('🗑️ Task deleted successfully!');
       await fetchTasks();
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to delete task');
     } finally {
@@ -137,6 +146,17 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+      <Toast 
+        message={success} 
+        type="success" 
+        onClose={() => setSuccess('')}
+      />
+      <Toast 
+        message={error} 
+        type="error" 
+        onClose={() => setError('')}
+      />
+      
       <header className="dashboard-header">
         <div className="header-content">
           <h1>Task Manager</h1>
@@ -159,7 +179,6 @@ const Dashboard = () => {
 
       <main className="dashboard-main">
         <div className="dashboard-container">
-          {error && <div className="error-message">{error}</div>}
 
           <div className="dashboard-actions">
             {!showForm && (
@@ -212,7 +231,7 @@ const Dashboard = () => {
                     disabled={loading}
                   >
                     <option value="pending">Pending</option>
-                    <option value="in progress">In Progress</option>
+                    <option value="in-progress">In-Progress</option>
                     <option value="completed">Completed</option>
                   </select>
                 </div>

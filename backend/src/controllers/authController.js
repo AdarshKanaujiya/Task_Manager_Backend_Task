@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 
-export const registerUser = async (req,res)=>{
+export const registerUser = async (req,res,next)=>{
     try{
         const {name,email,password}= req.body;
         
@@ -24,7 +24,7 @@ export const registerUser = async (req,res)=>{
 
         //create new user
         const newUser = await User.create({name,email:normalizedEmail,password:hashedPassword});
-        await newUser.save();
+        // await newUser.save();
 
         res.status(201).json({
             message:'User created successfully',
@@ -44,7 +44,7 @@ export const registerUser = async (req,res)=>{
     }
 }
 
-export const loginUser = async (req,res)=>{
+export const loginUser = async (req,res,next)=>{
     try{
         const {email,password}= req.body;
 
@@ -98,7 +98,7 @@ export const loginUser = async (req,res)=>{
     }
 }
 
-export const logoutUser = (req, res) => {
+export const logoutUser = (req, res,next) => {
     try{
         res.clearCookie('token',{
             httpOnly: true,
