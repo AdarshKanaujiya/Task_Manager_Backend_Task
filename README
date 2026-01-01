@@ -1,7 +1,9 @@
+## 🎯 Project Overview
 
+This project is a **production-ready RESTful API** built for task management with robust authentication, role-based access control, and secure data handling. It demonstrates enterprise-level backend development practices suitable for scalable applications.
 
 ```
-## API Documentation
+## 📝 API Documentation
 Postman Collection included:
 👉 backend\src\API_documentation.postman_collection.json
 
@@ -12,3 +14,120 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 
 ```
 
+
+**Assignment Completion Status: ✅ 100% Backend Complete**
+
+---
+
+## ✅ Features Implemented
+
+### 🔐 Authentication & Authorization
+- ✅ User registration with password hashing (bcrypt)
+- ✅ JWT-based authentication with HTTP-only cookies
+- ✅ Secure login/logout functionality
+- ✅ Role-based access control (User vs Admin)
+- ✅ Protected routes with middleware
+
+### 📝 CRUD Operations (Task Entity)
+- ✅ Create tasks (authenticated users)
+- ✅ Read tasks (user-specific & filtered)
+- ✅ Update tasks (with validation)
+- ✅ Delete tasks (owner/admin only)
+
+### 🛡️ Security & Validation
+- ✅ Password hashing with bcrypt (10 rounds)
+- ✅ JWT token with 1-hour expiration
+- ✅ HTTP-only cookies for XSS protection
+- ✅ Input validation using express-validator
+- ✅ Centralized error handling
+- ✅ Email normalization (lowercase)
+
+### 📚 Documentation & Best Practices
+- ✅ Comprehensive Postman collection
+- ✅ RESTful API design principles
+- ✅ Proper HTTP status codes
+- ✅ Modular project structure
+- ✅ MVC architecture pattern
+- ✅ Environment-based configuration
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|----------|-----------|
+| **Runtime** | Node.js (v18+) |
+| **Framework** | Express.js 5.x |
+| **Database** | MongoDB (Mongoose ODM) |
+| **Authentication** | JWT + bcrypt |
+| **Validation** | express-validator |
+| **Security** | cookie-parser, CORS |
+| **Development** | nodemon, dotenv |
+
+---
+
+
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- MongoDB (local or Atlas)
+- npm or yarn
+
+### Steps
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd Intershala/backend
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Configure environment variables**
+```bash
+# Create .env file in backend/ directory
+cp .env.example .env
+# Edit .env with your configuration (see below)
+```
+
+4. **Start MongoDB**
+```bash
+# If using local MongoDB
+mongod
+```
+
+5. **Run the server**
+```bash
+# Development mode (with auto-reload)
+npm run dev
+
+# Production mode
+npm start
+```
+
+6. **Verify installation**
+```bash
+# Server should be running on http://localhost:5000
+curl http://localhost:5000
+# Response: "API is running..."
+```
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the `backend/` directory:
+
+refer .env.example
+
+
+## APi Documentation
+
+Import into Postman to test all endpoints.
+
+https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
