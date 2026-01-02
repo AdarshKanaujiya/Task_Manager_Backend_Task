@@ -1,15 +1,15 @@
-## 🎯 Project Overview
+##  Project Overview
 
 This project is a **production-ready RESTful API** built for task management with robust authentication, role-based access control, and secure data handling. 
 
-📌 Task Manager App
+## Task Manager App
 
 A full-stack task management system with secure user authentication, role-based access control, scalable backend APIs, and an interactive frontend for API testing.
 
 ```
-## 📝 API Documentation
+ ##API Documentation
 Postman Collection included:
-👉 backend\src\API_documentation.postman_collection.json
+ backend\src\API_documentation.postman_collection.json
 
 Import into Postman to test all endpoints.
 
@@ -20,40 +20,40 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 
 
 
-## ✅ Features Implemented
+##  Features Implemented
 
-### 🔐 Authentication & Authorization
-- ✅ User registration with password hashing (bcrypt)
-- ✅ JWT-based authentication with HTTP-only cookies
-- ✅ Secure login/logout functionality
-- ✅ Role-based access control (User vs Admin)
-- ✅ Protected routes with middleware
+###  Authentication & Authorization
+- User registration with password hashing (bcrypt)
+-  JWT-based authentication with HTTP-only cookies
+-  Secure login/logout functionality
+-  Role-based access control (User vs Admin)
+-  Protected routes with middleware
 
-### 📝 CRUD Operations (Task Entity)
-- ✅ Create tasks (authenticated users)
-- ✅ Read tasks (user-specific & filtered)
-- ✅ Update tasks (with validation)
-- ✅ Delete tasks (owner/admin only)
+###  CRUD Operations (Task Entity)
+-  Create tasks (authenticated users)
+-  Read tasks (user-specific & filtered)
+-  Update tasks (with validation)
+-  Delete tasks (owner/admin only)
 
-### 🛡️ Security & Validation
-- ✅ Password hashing with bcrypt (10 rounds)
-- ✅ JWT token with 1-hour expiration
-- ✅ HTTP-only cookies for XSS protection
-- ✅ Input validation using express-validator
-- ✅ Centralized error handling
-- ✅ Email normalization (lowercase)
+###  Security & Validation
+-  Password hashing with bcrypt (10 rounds)
+-  JWT token with 1-hour expiration
+-  HTTP-only cookies for XSS protection
+-  Input validation using express-validator
+-  Centralized error handling
+-  Email normalization (lowercase)
 
-### 📚 Documentation & Best Practices
-- ✅ Comprehensive Postman collection
-- ✅ RESTful API design principles
-- ✅ Proper HTTP status codes
-- ✅ Modular project structure
-- ✅ MVC architecture pattern
-- ✅ Environment-based configuration
+### Documentation & Best Practices
+-  Comprehensive Postman collection
+-  RESTful API design principles
+-  Proper HTTP status codes
+-  Modular project structure
+-  MVC architecture pattern
+-  Environment-based configuration
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Category | Technology |
 |----------|-----------|
@@ -66,7 +66,7 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 | **Development** | nodemon, dotenv |
 
 ---
-🔐 Security Measures
+ ##Security Measures
 
 | Feature          | Description                 |
 | ---------------- | --------------------------- |
@@ -79,7 +79,7 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 
 
 
-📁 Project Structure
+ Project Structure
 
 ├── backend/
 │   ├── src/
@@ -102,7 +102,7 @@ https://documenter.getpostman.com/view/46592324/2sBXVcjs2x
 └── README.md
 
 
-🚀 Installation & Setup
+## Installation & Setup
 Backend Setup
 cd backend
 npm install
